@@ -1,5 +1,22 @@
+#Defining subnet attributes here
+subnet = {
+    pub_sub_1 = {
+        cidr_block = "172.16.0.0/24"
+        availability_zone = "us-east-1a"
+    }
+    pub_sub_2 = {
+        cidr_block = "172.16.1.0/24"
+        availability_zone = "us-east-1b"
+    }
+    pub_sub_3 = {
+        cidr_block = "172.16.2.0/24"
+        availability_zone = "us-east-1c"
+    }
+}
+
+
 security_groups = {
-  "cloud_2021" : {
+  "app_sg" : {
     description = "Security group for web servers"
     ingress_rules = [
       {
@@ -38,10 +55,14 @@ security_groups = {
   }
 }
 
-
-name = "dev-server"
-availability_zone = 
-
-name = "app-server"
-
-name = "prod-server"
+ec2 = {
+    my_app_server = {
+        server_name = "app-env"
+    }
+    my_dev_server = {
+        server_name = "dev-env"
+    }
+    my_web_server = {
+        server_name = "web-env"
+  }
+}

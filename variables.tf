@@ -1,4 +1,18 @@
+#small-project prefix set 
+variable "prefix" {
+    type = string
+    default = "small-project"
+}
 
+#Declaring subnet variable
+variable "subnet" {
+    type = map(object({
+        cidr_block = string
+        availability_zone = string
+    }))
+}
+
+#Declaring security group variable
 variable "security_groups" {
   description = "A map of security groups with their rules"
   type = map(object({
@@ -24,31 +38,21 @@ variable "security_groups" {
   default = {}
 }
 
-variable "AMI" {
-    type = map(any)
-    default = {
-        us-east-1 = ""
-    }
-}
-
-variable "prefix" {
-    description = "this is for name of instance"
-    type = string
-    default = "mini-project"
-}
-
-
-variable "subnets" {
-    type = map(object({
-        cidr_block = string
-        availability_zone = string
-    }))
-}
+# variable "ami" {
+#     type = map(any)
+#     default = {
+#         us-east-1 = ""
+#     }
+# }
 
 variable "ec2" {
     type = map(object({
         server_name = string
-        subnets = string
+        # subnets = string
     }))
     default = {}
 }
+
+
+
+
