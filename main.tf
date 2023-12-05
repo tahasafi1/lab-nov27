@@ -5,7 +5,7 @@ resource "aws_key_pair" "key" {
 
 resource "aws_vpc" "vpc-main" {
   cidr_block           = "172.16.0.0/16"
-  enable_dns_support = true
+  enable_dns_support   = true
   enable_dns_hostnames = true
 
   tags = {
@@ -16,9 +16,9 @@ resource "aws_vpc" "vpc-main" {
 ##
 
 resource "aws_subnet" "subnet-main" {
-  for_each = var.subnet
-  vpc_id     = aws_vpc.vpc-main.id
-  cidr_block = each.value.cidr_block
+  for_each          = var.subnet
+  vpc_id            = aws_vpc.vpc-main.id
+  cidr_block        = each.value.cidr_block
   availability_zone = each.value.availability_zone
 
   tags = {
@@ -49,7 +49,7 @@ resource "aws_route_table" "public-route-table-main" {
 
 #associate route table w/ each subnet created
 resource "aws_route_table_association" "public-rta-association" {
-  for_each = var.subnet
+  for_each       = var.subnet
   subnet_id      = aws_subnet.subnet-main[each.key].id
   route_table_id = aws_route_table.public-route-table-main.id
 }
@@ -93,23 +93,23 @@ output "security_group_id" {
 
 
 resource "aws_instance" "web-instance" {
-  for_each = var.ec2
+  for_each      = var.ec2
   ami           = "ami-0230bd60aa48260c6"
   instance_type = "t2.micro"
   key_name      = aws_key_pair.key.key_name
-#   availability_zone = [us-east-1a , us-east-1b, us-east-1c]
-  
-  subnet_id              = aws_subnet.subnet-main[each.value.subnet].id
+  #   availability_zone = [us-east-1a , us-east-1b, us-east-1c]
+
+  subnet_id              = aws_subnet.subnet-main[each.value.subnetname].id
   vpc_security_group_ids = [aws_security_group.default["app_sg"].id]
 
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo yum update -y
-              sudo yum install -y httpd
-              sudo systemctl start httpd.service
-              sudo systemctl enable httpd.service
-              sudo echo "<h1> Hello world from $(each.value.server_name) </h1>" > /var/www/html/index.html                   
-              EOF 
+  user_data              = <<-EOF
+                            #!/bin/bash
+                            sudo yum update -y
+                            sudo yum install -y httpd
+                            sudo systemctl start httpd.service
+                            sudo systemctl enable httpd.service
+                            sudo echo "<h1> Hello world from ${upper(each.key)}_SERVER </h1>" > /var/www/html/index.html                   
+                            EOF 
 
   tags = {
     Name = "${var.prefix}-${each.key}"

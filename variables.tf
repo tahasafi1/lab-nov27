@@ -1,15 +1,15 @@
 #small-project prefix set 
 variable "prefix" {
-    type = string
-    default = "small-project"
+  type    = string
+  default = "small-project"
 }
 
 #Declaring subnet variable
 variable "subnet" {
-    type = map(object({
-        cidr_block = string
-        availability_zone = string
-    }))
+  type = map(object({
+    cidr_block        = string
+    availability_zone = string
+  }))
 }
 
 #Declaring security group variable
@@ -46,11 +46,10 @@ variable "security_groups" {
 # }
 
 variable "ec2" {
-    type = map(object({
-        server_name = string
-        # subnets = string
-    }))
-    default = {}
+  type = map(object({
+    subnetname = string
+  }))
+  default = {}
 }
 
 

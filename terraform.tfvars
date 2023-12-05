@@ -1,17 +1,17 @@
 #Defining subnet attributes here
 subnet = {
-    pub_sub_1 = {
-        cidr_block = "172.16.0.0/24"
-        availability_zone = "us-east-1a"
-    }
-    pub_sub_2 = {
-        cidr_block = "172.16.1.0/24"
-        availability_zone = "us-east-1b"
-    }
-    pub_sub_3 = {
-        cidr_block = "172.16.2.0/24"
-        availability_zone = "us-east-1c"
-    }
+  pub_sub_1 = {
+    cidr_block        = "172.16.0.0/24"
+    availability_zone = "us-east-1a"
+  }
+  pub_sub_2 = {
+    cidr_block        = "172.16.1.0/24"
+    availability_zone = "us-east-1b"
+  }
+  pub_sub_3 = {
+    cidr_block        = "172.16.2.0/24"
+    availability_zone = "us-east-1c"
+  }
 }
 
 
@@ -56,13 +56,13 @@ security_groups = {
 }
 
 ec2 = {
-    my_app_server = {
-        server_name = "app-env"
-    }
-    my_dev_server = {
-        server_name = "dev-env"
-    }
-    my_web_server = {
-        server_name = "web-env"
+  app = {
+    subnetname = "pub_sub_1"
+  }
+  dev = {
+    subnetname = "pub_sub_2"
+  }
+  web = {
+    subnetname = "pub_sub_3"
   }
 }
